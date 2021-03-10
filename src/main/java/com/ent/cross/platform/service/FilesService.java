@@ -32,6 +32,7 @@ public class FilesService {
         try {
             files = Files.list(Paths.get(path))
                     .map(Path::toFile)
+                    .filter(file -> !file.isHidden())
                     .collect(Collectors.toList());
             files.forEach(System.out::println);
         } catch (IOException e) {
