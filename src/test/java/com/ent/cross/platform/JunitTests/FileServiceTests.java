@@ -17,6 +17,7 @@ import java.util.List;
 @AutoConfigureMockMvc
 public class FileServiceTests {
 
+    public static final Integer TOTAL_FILES = 1_000_000;
     @Autowired
     private FilesService filesService;
 
@@ -24,5 +25,7 @@ public class FileServiceTests {
     public void loadAllDirectoryFiles(){
         List<File> files = filesService.fetchAllDirectoryFiles("/Users/lodwinmoloto/Workplace/MockFiles");
         Assert.assertNotNull(files);
+        Assert.assertTrue(files.size() > 0);
+        Assert.assertTrue(files.size() < TOTAL_FILES);
     }
 }
