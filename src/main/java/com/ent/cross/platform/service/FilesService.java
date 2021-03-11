@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,12 +42,9 @@ public class FilesService {
      * @return files
      */
     public List<File> fetchAllDirectoryFiles(String path){
-
         try {
             files = Files.list(Paths.get(path))
                     .map(Path::toFile)
-                    .filter(file -> file.toString().endsWith(".txt"))
-                    .filter(file -> !file.isHidden())
                     .filter(file -> !file.isDirectory())
                     .collect(Collectors.toList());
         } catch (IOException e) {
@@ -66,7 +65,8 @@ public class FilesService {
                 filesDto.setPath(file.getPath());
                 filesDto.setFileSize(file.length());
                 filesDto.setName(file.getName());
-                filesDto.setLastModified(file.lastModified());
+                filesDto.setLastModified(Instant.ofEpochMilli(file.lastModified())
+                        .atZone(ZoneId.systemDefault()).toLocalDateTime());
                 filesDto.setCanRead(file.canRead());
                 filesDto.setHidden(file.isHidden());
             }else {
