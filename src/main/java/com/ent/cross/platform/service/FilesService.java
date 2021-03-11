@@ -57,24 +57,22 @@ public class FilesService {
 
 
     public List<FilesDto> readFileContents(String path) throws IOException {
-
         String filePath = convertJson(path).getPath();
         List<File> files = fetchAllDirectoryFiles(filePath);
-        files.forEach(file -> {
-            try {
-                if (file.exists() && file.canRead()){
-                    filesDto.setPath(file.getPath());
-                    filesDto.setFileSize(String.valueOf(file.length()));
-                    filesDto.setName(file.getName());
-                    Stream<String> stream = Files.lines(Paths.get(file.getPath()));
-                    filesDto.setInformation(stream.collect(Collectors.joining()));
-                }else {
-                    logger.info("File is not valid");
-                }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+        files.forEach(file -> {
+            FilesDto filesDto = new FilesDto();
+            if (file.exists()){
+                filesDto.setPath(file.getPath());
+                filesDto.setFileSize(file.length());
+                filesDto.setName(file.getName());
+                filesDto.setLastModified(file.lastModified());
+                filesDto.setCanRead(file.canRead());
+                filesDto.setHidden(file.isHidden());
+            }else {
+                logger.info("File is not valid");
             }
+
             filesDtoList.add(filesDto);
         });
 
