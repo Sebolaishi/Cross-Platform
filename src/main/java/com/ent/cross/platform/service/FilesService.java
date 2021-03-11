@@ -70,7 +70,7 @@ public class FilesService {
                 filesDto.setCanRead(file.canRead());
                 filesDto.setHidden(file.isHidden());
             }else {
-                logger.info("File is not valid");
+                logger.info("File is invalid");
             }
 
             filesDtoList.add(filesDto);
