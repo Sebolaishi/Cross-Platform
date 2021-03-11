@@ -1,8 +1,11 @@
 package com.ent.cross.platform.service;
 
 import com.ent.cross.platform.processors.FilesDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -13,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -20,6 +24,10 @@ import java.util.stream.Collectors;
 @Service @Getter @Setter
 public class FilesService {
 
+    @Autowired
+    private FilesDto filesDto;
+
+    private List<FilesDto> filesDtoList = new ArrayList<>();
     private List<File> files = new ArrayList<>();
 
     /**
@@ -34,7 +42,6 @@ public class FilesService {
                     .map(Path::toFile)
                     .filter(file -> !file.isHidden())
                     .collect(Collectors.toList());
-            files.forEach(System.out::println);
         } catch (IOException e) {
             //TODO Error while reading the directory
         }
@@ -42,13 +49,29 @@ public class FilesService {
         return files;
     }
 
-    /**
-     *
-     * @param files
-     * @return
-     */
-    public List<FilesDto> readFileContents(List<File> files){
 
-        return null;
+    public List<FilesDto> readFileContents(String path) throws JsonProcessingException {
+
+        String filePath = convertJson(path).getPath();
+        List<File> files = fetchAllDirectoryFiles(filePath);
+        files.forEach(file -> {
+            try {
+                filesDto.setPath(file.getPath());
+                filesDto.setFileSize(String.valueOf(file.length()));
+                filesDto.setName(file.getName());
+                Stream<String> stream = Files.lines(Paths.get(file.getPath()));
+                stream.forEach(info -> filesDto.setInformation(info));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            filesDtoList.add(filesDto);
+        });
+
+        return filesDtoList;
+    }
+
+    public FilesDto convertJson(String message) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(message, FilesDto.class);
     }
 }

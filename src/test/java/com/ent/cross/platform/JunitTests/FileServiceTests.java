@@ -1,9 +1,13 @@
 package com.ent.cross.platform.JunitTests;
 
+import com.ent.cross.platform.processors.FilesDto;
 import com.ent.cross.platform.service.FilesService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,15 +21,24 @@ import java.util.List;
 @AutoConfigureMockMvc
 public class FileServiceTests {
 
-    public static final Integer TOTAL_FILES = 1_000_000;
+    private static Logger logger = LoggerFactory.getLogger(FileServiceTests.class);
+
     @Autowired
     private FilesService filesService;
+    public static final String path = "/Users/lodwinmoloto/Workplace/MockFiles";
 
     @Test
-    public void loadAllDirectoryFiles(){
-        List<File> files = filesService.fetchAllDirectoryFiles("/Users/lodwinmoloto/Workplace/MockFiles");
+    public void loadAllDirectoryFiles() throws JsonProcessingException {
+        List<File> files = filesService.fetchAllDirectoryFiles(path);
+        List<FilesDto> filesDtoList = filesService.readFileContents(path);
         Assert.assertNotNull(files);
         Assert.assertTrue(files.size() > 0);
-        Assert.assertTrue(files.size() < TOTAL_FILES);
+
+        Assert.assertNotNull(filesDtoList.get(0).getPath());
+        Assert.assertNotNull(filesDtoList.get(0).getFileSize());
+        Assert.assertNotNull(filesDtoList.get(0).getInformation());
+        logger.info(filesDtoList.get(0).getPath());
+        logger.info(filesDtoList.get(0).getName());
+        logger.info(filesDtoList.get(0).getInformation());
     }
 }
