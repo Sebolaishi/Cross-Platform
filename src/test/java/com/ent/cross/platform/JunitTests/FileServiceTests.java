@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @SpringBootTest
@@ -25,14 +26,18 @@ public class FileServiceTests {
 
     @Autowired
     private FilesService filesService;
-    public static final String path = "/Users/lodwinmoloto/Workplace/MockFiles";
+    public static final String path;
+
+    static {
+        path = "{\"path\":\"/Users/lodwinmoloto/Workplace/MockFiles\"}";
+    }
 
     @Test
-    public void loadAllDirectoryFiles() throws JsonProcessingException {
-        List<File> files = filesService.fetchAllDirectoryFiles(path);
+    public void loadAllDirectoryFiles() throws IOException {
+
         List<FilesDto> filesDtoList = filesService.readFileContents(path);
-        Assert.assertNotNull(files);
-        Assert.assertTrue(files.size() > 0);
+        Assert.assertNotNull(filesService.getFiles());
+        Assert.assertTrue(filesService.getFiles().size() > 0);
 
         Assert.assertNotNull(filesDtoList.get(0).getPath());
         Assert.assertNotNull(filesDtoList.get(0).getFileSize());

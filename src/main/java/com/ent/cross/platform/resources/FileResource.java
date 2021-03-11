@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class FileResource {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<FilesDto> savePerson(@Valid @RequestBody String path) throws JsonProcessingException {
+    public List<FilesDto> savePerson(@Valid @RequestBody String path) throws IOException {
         filesService.readFileContents(path);
         return filesService.getFilesDtoList();
     }
