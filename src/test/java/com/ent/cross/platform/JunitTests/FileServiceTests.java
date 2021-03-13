@@ -28,7 +28,7 @@ public class FileServiceTests {
     private static List<FilesDto> filesDtoList = new ArrayList<>();
 
     static {
-        path = "{\"path\":\"/Users/lodwinmoloto/Workplace/MockFiles/do\"}";
+        path = "/Users/lodwinmoloto/Workplace";
     }
 
     @Before
@@ -46,7 +46,7 @@ public class FileServiceTests {
     @Test
     public void validateProperties(){
         Assert.assertNotNull(filesDtoList.get(0).getPath());
-        Assert.assertTrue(filesDtoList.get(0).isHidden());
+        Assert.assertFalse(filesDtoList.get(0).isHidden());
         Assert.assertNotNull(filesDtoList.get(0).getName());
         Assert.assertNotNull(filesDtoList.get(0).getLastModified());
         Assert.assertTrue(filesDtoList.get(0).isReadable());
