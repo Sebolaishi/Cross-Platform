@@ -1,6 +1,6 @@
 package com.ent.cross.platform.utilities;
 
-import com.ent.cross.platform.processors.FilesDto;
+import com.ent.cross.platform.processors.FilesInformationTransferObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,8 @@ public class FileUtility {
                 .toLocalDateTime().toString();
     }
 
-    public FilesDto convertJson(String message) throws JsonProcessingException {
+    public FilesInformationTransferObject convertJson(String message) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(message, FilesDto.class);
+        return objectMapper.readValue(message, FilesInformationTransferObject.class);
     }
 }

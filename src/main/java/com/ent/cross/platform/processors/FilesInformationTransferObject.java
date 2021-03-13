@@ -4,8 +4,11 @@ import lombok.Data;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class responsible data transfer to clients
+ */
 @Component @Data @Log
-public class FilesDto {
+public class FilesInformationTransferObject {
 
     private String name;
     private long fileSize;

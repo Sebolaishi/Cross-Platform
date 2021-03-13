@@ -22,7 +22,6 @@ public class FileUtilityTests {
 
     @Test
     public void epochToLocalTimeConverter(){
-
         String localTime = fileUtility.convertToLocalDateTime(Epoch_Milliseconds);
         log.info(localTime);
         Assert.assertNotNull(localTime);
