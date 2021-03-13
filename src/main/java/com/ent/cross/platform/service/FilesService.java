@@ -1,38 +1,37 @@
 package com.ent.cross.platform.service;
 
+import com.ent.cross.platform.exceptions.EmptyListException;
+import com.ent.cross.platform.contants.ExceptionMessages;
 import com.ent.cross.platform.processors.FilesDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ent.cross.platform.utilities.FileUtility;
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  *
  */
-@Service @Getter @Setter
-public class FilesService {
-
-    private static Logger logger = LoggerFactory.getLogger(FilesService.class);
+@Service @Getter
+@Setter @Log
+public class FilesService implements ExceptionMessages {
 
     @Autowired
     private FilesDto filesDto;
-
+    @Autowired
+    private FileUtility fileUtility;
     private List<FilesDto> filesDtoList = new ArrayList<>();
     private List<File> files = new ArrayList<>();
 
@@ -41,14 +40,22 @@ public class FilesService {
      * @param path received file path
      * @return files
      */
-    public List<File> fetchAllDirectoryFiles(String path){
+    public List<File> fetchAllDirectoryFiles(String path) throws NotDirectoryException {
+
         try {
             files = Files.list(Paths.get(path))
                     .map(Path::toFile)
                     .filter(file -> !file.isDirectory())
+                    .filter(file -> !file.isHidden())
                     .collect(Collectors.toList());
-        } catch (IOException e) {
-            logger.error("Supplied path is a directory and not a file path");
+        } catch (Exception exception) {
+            log.severe(DIRECTORY_NOT_FOUND);
+            throw new NotDirectoryException(HttpStatus.NOT_FOUND.name());
+        }
+
+        if (files.size() == 0){
+            log.warning(NO_CONTENT);
+            throw new EmptyListException();
         }
 
         return files;
@@ -56,21 +63,19 @@ public class FilesService {
 
 
     public List<FilesDto> readFileContents(String path) throws IOException {
-        String filePath = convertJson(path).getPath();
-        List<File> files = fetchAllDirectoryFiles(filePath);
-
+        List<File> files = fetchAllDirectoryFiles(path);
         files.forEach(file -> {
             FilesDto filesDto = new FilesDto();
             if (file.exists()){
-                filesDto.setPath(file.getPath());
-                filesDto.setFileSize(file.length());
                 filesDto.setName(file.getName());
-                filesDto.setLastModified(Instant.ofEpochMilli(file.lastModified())
-                        .atZone(ZoneId.systemDefault()).toLocalDateTime());
-                filesDto.setCanRead(file.canRead());
+                filesDto.setFileSize(file.length());
+                filesDto.setLastModified(fileUtility.convertToLocalDateTime(file.lastModified()));
+                filesDto.setReadable(file.canRead());
                 filesDto.setHidden(file.isHidden());
+                filesDto.setPath(file.getPath());
+
             }else {
-                logger.info("File is invalid");
+                log.info("File is invalid");
             }
 
             filesDtoList.add(filesDto);
@@ -79,14 +84,4 @@ public class FilesService {
         return filesDtoList;
     }
 
-    /**
-     * Convert json string received from client or endpoint to a java bean.
-     * @param message
-     * @return
-     * @throws JsonProcessingException
-     */
-    public FilesDto convertJson(String message) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(message, FilesDto.class);
-    }
 }

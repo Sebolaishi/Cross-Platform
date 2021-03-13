@@ -2,13 +2,11 @@ package com.ent.cross.platform.JunitTests;
 
 import com.ent.cross.platform.processors.FilesDto;
 import com.ent.cross.platform.service.FilesService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.java.Log;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,16 +19,16 @@ import java.util.List;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
+@Log
 public class FileServiceTests {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileServiceTests.class);
     @Autowired
     private FilesService filesService;
     public static final String path;
     private static List<FilesDto> filesDtoList = new ArrayList<>();
 
     static {
-        path = "{\"path\":\"/Users/lodwinmoloto/Workplace/MockFiles\"}";
+        path = "{\"path\":\"/Users/lodwinmoloto/Workplace/MockFiles/do\"}";
     }
 
     @Before
@@ -40,6 +38,7 @@ public class FileServiceTests {
 
     @Test
     public void validateFilesList(){
+        log.info("Hello Mahlatse");
         Assert.assertNotNull(filesService.getFiles());
         Assert.assertTrue(filesService.getFiles().size() > 0);
     }
@@ -47,10 +46,11 @@ public class FileServiceTests {
     @Test
     public void validateProperties(){
         Assert.assertNotNull(filesDtoList.get(0).getPath());
-        Assert.assertNotNull(filesDtoList.get(0).getFileSize() );
+        Assert.assertTrue(filesDtoList.get(0).isHidden());
         Assert.assertNotNull(filesDtoList.get(0).getName());
-        Assert.assertNotNull(filesDtoList.get(0).isHidden());
-        logger.info("\n File Path : \t" + filesDtoList.get(0).getPath() );
-        logger.info("\n File Name : \t" + filesDtoList.get(0).getName());
+        Assert.assertNotNull(filesDtoList.get(0).getLastModified());
+        Assert.assertTrue(filesDtoList.get(0).isReadable());
+        log.info("\n File Path : \t" + filesDtoList.get(0).getPath() );
+        log.info("\n File Name : \t" + filesDtoList.get(0).getName());
     }
 }
