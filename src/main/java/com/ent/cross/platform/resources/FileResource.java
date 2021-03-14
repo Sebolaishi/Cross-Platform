@@ -2,7 +2,7 @@ package com.ent.cross.platform.resources;
 
 import com.ent.cross.platform.processors.FileRequestBody;
 import com.ent.cross.platform.processors.FilesInformationTransferObject;
-import com.ent.cross.platform.service.FilesService;
+import com.ent.cross.platform.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,14 +20,14 @@ import java.util.List;
 public class FileResource {
 
     @Autowired
-    private FilesService filesService;
+    private FileService fileService;
 
     @PostMapping(value = "/files", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<FilesInformationTransferObject> savePerson(@Valid @RequestBody FileRequestBody path) throws IOException {
-        filesService.processFileAttributeInformation(path.getPath());
-        return filesService.getFilesInformationTransferObjectList();
+    public List<FilesInformationTransferObject> fetchDirectoryInfo(@Valid @RequestBody FileRequestBody path) throws IOException {
+        fileService.processFileAttributeInformation(path.getPath());
+        return fileService.getFilesInformationTransferObjectList();
     }
 
 }

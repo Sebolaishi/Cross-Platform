@@ -1,7 +1,7 @@
 package com.ent.cross.platform.JunitTests;
 
 import com.ent.cross.platform.processors.FilesInformationTransferObject;
-import com.ent.cross.platform.service.FilesService;
+import com.ent.cross.platform.services.FileService;
 import lombok.extern.java.Log;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import java.util.List;
 public class FileServiceTests {
 
     @Autowired
-    private FilesService filesService;
+    private FileService fileService;
     public static final String path;
     private static List<FilesInformationTransferObject> filesInformationTransferObjectList = new ArrayList<>();
 
@@ -33,13 +33,13 @@ public class FileServiceTests {
 
     @Before
     public void loadDirectoryFiles() throws IOException {
-        filesInformationTransferObjectList = filesService.processFileAttributeInformation(path);
+        filesInformationTransferObjectList = fileService.processFileAttributeInformation(path);
     }
 
     @Test
     public void validateFilesList(){
-        Assert.assertNotNull(filesService.getFiles());
-        Assert.assertTrue(filesService.getFiles().size() > 0);
+        Assert.assertNotNull(fileService.getFiles());
+        Assert.assertTrue(fileService.getFiles().size() > 0);
     }
 
     @Test

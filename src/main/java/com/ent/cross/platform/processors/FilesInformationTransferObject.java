@@ -1,18 +1,19 @@
 package com.ent.cross.platform.processors;
 
 import lombok.Data;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 /**
  * Class responsible data transfer to clients
  */
-@Component @Data @Log
+@Component @Data
 public class FilesInformationTransferObject {
 
     private String name;
     private long fileSize;
-    private String lastModified;
+    private LocalDateTime lastModified;
     private boolean readable;
     private boolean isHidden;
     private String path;

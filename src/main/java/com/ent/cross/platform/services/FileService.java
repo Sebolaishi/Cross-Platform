@@ -1,4 +1,4 @@
-package com.ent.cross.platform.service;
+package com.ent.cross.platform.services;
 
 import com.ent.cross.platform.contants.ExceptionMessages;
 import com.ent.cross.platform.processors.FilesInformationTransferObject;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service @Getter
 @Setter @Log
-public class FilesService implements ExceptionMessages {
+public class FileService implements ExceptionMessages {
 
     @Autowired
     private FilesInformationTransferObject filesInformationTransferObject;

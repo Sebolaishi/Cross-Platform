@@ -6,15 +6,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Component
 public class FileUtility {
 
-    public String convertToLocalDateTime(long epoch){
+    public LocalDateTime convertToLocalDateTime(long epoch){
         return Instant.ofEpochMilli(epoch)
                 .atZone(ZoneId.systemDefault())
-                .toLocalDateTime().toString();
+                .toLocalDateTime();
     }
 
     public FilesInformationTransferObject convertJson(String message) throws JsonProcessingException {

@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
@@ -22,8 +24,8 @@ public class FileUtilityTests {
 
     @Test
     public void epochToLocalTimeConverter(){
-        String localTime = fileUtility.convertToLocalDateTime(Epoch_Milliseconds);
-        log.info(localTime);
+        LocalDateTime localTime = fileUtility.convertToLocalDateTime(Epoch_Milliseconds);
+        log.info(localTime.toString());
         Assert.assertNotNull(localTime);
     }
 }

@@ -43,7 +43,7 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        return handleExceptionInternal(exception, error, headers, HttpStatus.NOT_FOUND, request);
+        return handleExceptionInternal(exception, error, headers, HttpStatus.NO_CONTENT, request);
     }
 
 }
