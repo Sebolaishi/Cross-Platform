@@ -11,13 +11,14 @@ Cross platform is a file attribute reader. It is a service that receives a path 
 - Service Endpoint Url (http://localhost:8080/cross-app/files)
 ####Spring Actuator 
 - Used for service **monitoring**.
-  - Url (http://localhost:8080/manage-cross-platform/*)
-- ######Health check
-  - Url (*/health)
-- ######Information
-  - Url (*/info)
-- ######Metrics
-  - Url (*/metrics)
+  - All components - Url (http://localhost:8080/manage-cross-platform)
+  - Specific components - Url (http://localhost:8080/manage-cross-platform/*)
+    - ######Health check
+      - Url (*/health)
+    - ######Information
+      - Url (*/info)
+    - ######Metrics
+      - Url (*/metrics)
 ####Spring Controller Advice 
 - Used for exception handling strategy.
 ####Swagger Api Documentation 
