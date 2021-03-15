@@ -1,15 +1,14 @@
 package com.ent.cross.platform.services;
 
 import com.ent.cross.platform.contants.ExceptionMessages;
+import com.ent.cross.platform.exceptions.NoContentExceptionHandler;
 import com.ent.cross.platform.processors.FilesInformationTransferObject;
 import com.ent.cross.platform.utilities.FileUtility;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,12 +45,12 @@ public class FileService implements ExceptionMessages {
                     .collect(Collectors.toList());
         } catch (Exception exception) {
             log.severe(DIRECTORY_NOT_FOUND);
-            throw new NotDirectoryException(HttpStatus.NOT_FOUND.name());
+            throw new NotDirectoryException(DIRECTORY_NOT_FOUND);
         }
 
         if (files.size() == 0){
             log.warning(NO_CONTENT);
-            throw new NotFoundException(HttpStatus.NO_CONTENT.name());
+            throw new NoContentExceptionHandler();
         }
 
         return files;

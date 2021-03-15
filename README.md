@@ -8,11 +8,11 @@ Cross platform is a file attribute reader. It is a service that receives a path 
 #Frameworks
 ####Spring Boot 
 - Service build framework.
-- Service Endpoint Url (http://localhost:8080/cross-app/files)
+- Service Endpoint Url (http://localhost:8080/cross-app/files).
 ####Spring Actuator 
 - Used for service **monitoring**.
-  - All components - Url (http://localhost:8080/manage-cross-platform)
-  - Specific components - Url (http://localhost:8080/manage-cross-platform/*)
+  - All components - Url (http://localhost:8080/manage-cross-platform).
+  - Specific components - Url (http://localhost:8080/manage-cross-platform/*).
     - ######Health check
       - Url (*/health)
     - ######Information
@@ -23,7 +23,7 @@ Cross platform is a file attribute reader. It is a service that receives a path 
 - Used for exception handling strategy.
 ####Swagger Api Documentation 
 - Used for Api documentation.
-  - Url (http://localhost:8080/cross-swagger-ui.html)
+  - Url (http://localhost:8080/cross-swagger-ui.html).
 ####Lombok 
 - Java Library used for reducing boiler plate code such as getters and setters etc.
 ####Logging
@@ -39,9 +39,9 @@ Cross platform is a file attribute reader. It is a service that receives a path 
 #Dockerization & Deployment
   - Please once again verify that your compile JDK and dockerfile JDK are the same versions to avoid exceptions.
 - ######Build Image
-  - Execute docker command - ( docker build -t cross-platform . )
+  - Execute docker command - ( docker build -t cross-platform . ).
 - ######Run & port binding
-  - Execute docker command - (docker run -p 8080:8080 cross-platform)
+  - Execute docker command - (docker run -p 8080:8080 cross-platform).
 - ######Image name
   - cross-platform
 #Future Improvements
