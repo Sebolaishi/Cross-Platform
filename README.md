@@ -1,10 +1,10 @@
 # Cross-Platform
 Cross platform is a file attribute reader. It is a service that receives a path or directory, and returns the attributes of each file found in the directory. 
 # Build Tool
-- #####Maven
+- ##### Maven
 # DevOps
-- #####Docker 
-- #####Git
+- ##### Docker 
+- ##### Git
 # Frameworks
 #### Spring Boot 
 - Service build framework.
@@ -13,11 +13,11 @@ Cross platform is a file attribute reader. It is a service that receives a path 
 - Used for service **monitoring**.
   - All components - Url (http://localhost:8080/manage-cross-platform).
   - Specific components - Url (http://localhost:8080/manage-cross-platform/*).
-    - ######Health check
+    - ###### Health check
       - Url (*/health)
-    - ######Information
+    - ###### Information
       - Url (*/info)
-    - ######Metrics
+    - ###### Metrics
       - Url (*/metrics)
 #### Spring Controller Advice 
 - Used for exception handling strategy.
