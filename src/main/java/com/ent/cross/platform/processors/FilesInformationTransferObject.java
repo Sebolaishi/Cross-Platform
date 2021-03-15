@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * Class responsible data transfer to clients
  */
-@Component @Data
+@Data
 public class FilesInformationTransferObject {
 
     private String name;

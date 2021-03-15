@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * Class definition of client request body
  */
-@Data @Component
+@Data
 public class FileRequestBody {
     private String path;
 }
