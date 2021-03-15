@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-@Log
 public class FileUtilityTests {
 
     @Autowired
@@ -25,7 +24,6 @@ public class FileUtilityTests {
     @Test
     public void epochToLocalTimeConverter(){
         LocalDateTime localTime = fileUtility.convertToLocalDateTime(Epoch_Milliseconds);
-        log.info(localTime.toString());
         Assert.assertNotNull(localTime);
     }
 }

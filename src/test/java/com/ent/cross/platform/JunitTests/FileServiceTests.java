@@ -72,6 +72,7 @@ public class FileServiceTests implements ExceptionMessages {
     public void validateProperties(){
         Assert.assertNotNull(filesInformationTransferObjectList.get(0).getPath());
         Assert.assertFalse(filesInformationTransferObjectList.get(0).isHidden());
+        Assert.assertTrue(filesInformationTransferObjectList.get(0).getFileSize() > 0);
         Assert.assertNotNull(filesInformationTransferObjectList.get(0).getName());
         Assert.assertNotNull(filesInformationTransferObjectList.get(0).getLastModified());
         Assert.assertTrue(filesInformationTransferObjectList.get(0).isReadable());

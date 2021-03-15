@@ -30,4 +30,19 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
         return handleExceptionInternal(exception, error, headers, HttpStatus.NOT_FOUND, request);
     }
 
+    /**
+     * Exception Handler responsible for service not found exceptions
+     * @param exception
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {NoContentExceptionHandler.class})
+    protected ResponseEntity<Object> notFoundExceptions( Exception exception, WebRequest request) {
+        BaseExceptionsResponse error = BaseExceptionsResponse.of(HttpStatus.NO_CONTENT.name(), NO_CONTENT);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        return handleExceptionInternal(exception, error, headers, HttpStatus.NO_CONTENT, request);
+    }
+
 }
