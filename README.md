@@ -40,6 +40,7 @@ Cross platform is a file attribute reader. It is a service that receives a path 
   - Please once again verify 
     - that your compile JDK and dockerfile JDK are the same versions to avoid exceptions.
     - excute docker commands from application root.
+    - (cross-platform-1.0-SNAPSHOT.jar) is available in the target folder
 - ###### Build Image
   - Execute docker command - ( docker build -t cross-platform . ).
 - ###### Run & port binding
