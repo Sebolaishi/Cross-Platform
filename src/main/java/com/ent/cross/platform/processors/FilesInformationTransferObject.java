@@ -1,13 +1,14 @@
 package com.ent.cross.platform.processors;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 /**
  * Class responsible data transfer to clients
  */
-@Data
+@Data @Component
 public class FilesInformationTransferObject {
 
     private String name;
